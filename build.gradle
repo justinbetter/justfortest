@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+
+def env = "-"+(System.getProperty("env")?:System.getenv()["USERDOMAIN"])
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "25.0.2"
+
+    signingConfigs {
+        tuxiaobao {
+            keyAlias 'tuyou_android.keystore'
+            keyPassword 'tuxiaobao'
+            storeFile file('../DDay/tuyou_android.keystore')
+            storePassword 'tuxiaobao'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.example.justfortest"
+        minSdkVersion 19
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            moduleName "bspatch" // 生成的so名字
+        }
+
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.tuxiaobao
+        }
+        debug {
+            signingConfig signingConfigs.tuxiaobao
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+//    compile ("com.tuyou.tsd:framework:"+dependFrameworkVersion+"$env"){ changing = true}
+    compile project(':dday-framework')
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+
+}
