@@ -3,7 +3,6 @@ package com.example.justfortest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageInstallObserver;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Message;
@@ -40,6 +39,8 @@ public class BsdiffFakeService extends BaseService {
             {"com.tuyou.tsd.voice", "voice.patch", "voice.apk"},
             {"com.tuyou.tsd.cardvr", "cardvr.patch", "cardvr.apk"},
             {"com.tuyou.tsd.settings", "settings.patch", "settings.apk"},
+            {"com.tuyou.tsd", "tsd.patch", "tsd.apk"},
+            {"com.tuyou.tsd.updatesoft", "updatesoft.patch", "updatesoft.apk"},
 
     };
 
@@ -75,31 +76,31 @@ public class BsdiffFakeService extends BaseService {
 //                }
 //            }
             //加载patch包
-            for (String[] config : patch_config) {
-                try {
-                    final String packageName = config[0];
-                    final File patch = new File(NEW_APK_PARENT_PATH, config[1]);
-                    final File newApk = new File(NEW_APK_PARENT_PATH, config[2]);
-                    PackageManager packageManager = getApplicationContext().getPackageManager();
-                    final String oldApkPath = packageManager.getApplicationInfo(packageName, 0).sourceDir;
-                    if (patch.exists()) {
-                        executorService.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.i(TAG, "doPatch： " + packageName + " " + oldApkPath + " " + patch.getAbsolutePath() + " " + newApk.getAbsolutePath());
-                                patchNewApk(packageName, oldApkPath, newApk.getAbsolutePath(), patch.getAbsolutePath());
-                            }
-                        });
-                    } else {
-                        Log.i(TAG, "patch not exist！");
-                    }
-
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            totalPatchCount = patch_config.length;
+//            for (String[] config : patch_config) {
+//                try {
+//                    final String packageName = config[0];
+//                    final File patch = new File(NEW_APK_PARENT_PATH, config[1]);
+//                    final File newApk = new File(NEW_APK_PARENT_PATH, config[2]);
+//                    PackageManager packageManager = getApplicationContext().getPackageManager();
+//                    final String oldApkPath = packageManager.getApplicationInfo(packageName, 0).sourceDir;
+//                    if (patch.exists()) {
+//                        executorService.execute(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.i(TAG, "doPatch： " + packageName + " " + oldApkPath + " " + patch.getAbsolutePath() + " " + newApk.getAbsolutePath());
+//                                patchNewApk(packageName, oldApkPath, newApk.getAbsolutePath(), patch.getAbsolutePath());
+//                            }
+//                        });
+//                    } else {
+//                        Log.i(TAG, "patch not exist！");
+//                    }
+//
+//                } catch (PackageManager.NameNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//            totalPatchCount = patch_config.length;
 
         } else if (action.equals(APK_RESPONSE)) {
             //apk数量-1 patch_config.length
@@ -107,7 +108,7 @@ public class BsdiffFakeService extends BaseService {
                 totalPatchCount--;
                 int result = intent.getIntExtra("result", -1);
                 String packageName = intent.getStringExtra("packageName");
-                Log.i(TAG, "result: " + result + "pkg: " + packageName);
+                Log.i(TAG, "result: " + result + " pkg: " + packageName);
                 if (totalPatchCount == 0) {
                     Message message = Message.obtain(workHandler.getThreadHandler(), Integer.MIN_VALUE);
                     Intent install_intent = new Intent(APK_INSTALL);
@@ -140,18 +141,15 @@ public class BsdiffFakeService extends BaseService {
 
     }
 
-    private void patchNewApk(String packageName, String oldApkPath, String newApkPath, String patchPath) {
-        File patchFile = new File(patchPath);
-        long patchTime = 0;
-        long startTime = 0;
-
-        Log.i(TAG, "load patch" + patchFile);
-        startTime = System.currentTimeMillis();
-        int bspatch = BspatchUtils.bspatch(oldApkPath, newApkPath, patchPath);
-        patchTime = System.currentTimeMillis();
-        Log.e("justin", "patch result: " + bspatch + "\n" + "patch time: " + (patchTime - startTime));
-        postPatchResult(packageName, bspatch);
-    }
+//    private void patchNewApk(String packageName, String oldApkPath, String newApkPath, String patchPath) {
+//        File patchFile = new File(patchPath);
+//        Log.i(TAG, "load patch" + patchFile);
+//        long startTime = System.currentTimeMillis();
+//        int bspatch = BspatchUtils.bspatch(oldApkPath, newApkPath, patchPath);
+//        long patchTime = System.currentTimeMillis();
+//        Log.e("justin", packageName+" patch result: " + bspatch + "\n" + "patch time: " + (patchTime - startTime));
+//        postPatchResult(packageName, bspatch);
+//    }
 
 
     private void postPatchResult(String pkgName, int isPatchSuccess) {
@@ -184,7 +182,7 @@ public class BsdiffFakeService extends BaseService {
                     public void packageInstalled(String packageName, int returnCode) throws RemoteException {
                         Log.w(TAG, "packageInstalled:" + packageName + " returnCode=" + returnCode);
                         long endTime = System.currentTimeMillis();
-                        Log.e("justin", "install time " + (endTime - installTime) + "\n");
+                        Log.e("justin", packageName+" install time " + (endTime - installTime) + "\n");
 
                     }
 

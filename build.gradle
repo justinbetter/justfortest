@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 def env = "-"+(System.getProperty("env")?:System.getenv()["USERDOMAIN"])
 
@@ -55,9 +56,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-//    compile ("com.tuyou.tsd:framework:"+dependFrameworkVersion+"$env"){ changing = true}
     compile project(':dday-framework')
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-
+    apt 'com.bluelinelabs:logansquare-compiler:1.3.6'
+    compile 'com.bluelinelabs:logansquare:1.3.6'
 }

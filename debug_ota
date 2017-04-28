@@ -1,0 +1,1 @@
+{"maps": {"check_rom": {"fake_ret": "success", "scene": "fake"}, "download": {"fake_ret": "success", "scene": "fake"}, "query": {"fake_ret": "success", "scene": "fake"}, "verify": {"fake_ret": "success", "scene": "real"}}}

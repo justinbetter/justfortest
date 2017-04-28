@@ -26,11 +26,14 @@ for file in listdir:
         # print apk
         apk_dir = parent_dir+apk
         print apk_dir
-        shutil.copy(apk_dir, dst_dir)
+        # shutil.copy(apk_dir, dst_dir)
         #bat
-        os.chdir(dst_dir)
-        os.system(dst_dir+"push_apk.py")
-
+        # os.chdir(dst_dir)
+        os.system("adb shell rm /system/priv-app/just/"+ apk)
+        os.system("adb root")
+        os.system("adb remount")
+        os.system("adb push "+apk_dir+" /system/priv-app/just/"+apk)
+        os.system("adb reboot")
 
 
 
