@@ -111,11 +111,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                            romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_PREPARE));
                         } else if (state == RomUpdateStateMachine.CMD_PREPARE) {
                             updateLocalRomTask(RomUpdateStateMachine.CMD_PREPARE, "进入预备状态");
-                            romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_DOWNLOAD));
+                            romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_DOWNLOAD);
                         } else if (state == RomUpdateStateMachine.CMD_DOWNLOAD) {
                             //FIXME 下载逻辑
                             updateLocalRomTask(RomUpdateStateMachine.CMD_DOWNLOAD, "进入下载状态");
-                            romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_VERIFY));
+                            romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_VERIFY);
                         } else if (state == RomUpdateStateMachine.CMD_VERIFY) {
                             //Verify size md5
                             updateLocalRomTask(RomUpdateStateMachine.CMD_VERIFY, "进入校验状态");
@@ -123,23 +123,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             RomTask localRomTask = getLocakRomTask();
                             boolean isFileVaild = CommonUtils.validFile(filepath, localRomTask.romInfoResult.rominfo.rom_map.size, localRomTask.romInfoResult.rominfo.rom_map.md5);
                             if (isFileVaild) {
-                                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_INSTALL));
+                                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_INSTALL);
                             } else {
                                 //校验错误，删除文件，进入默认
                                 //TODO 这里暂时不删除
-                                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_DEFAULT));
+                                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_DEFAULT);
                             }
 
                         } else if (state == RomUpdateStateMachine.CMD_INSTALL) {
                             //TODO 更新rom
-                            romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_DEFAULT));
+                            romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_DEFAULT);
                         }
 
                     }
                 });
 
             }
-            romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_PREPARE));
+            romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_PREPARE);
         }
     }
 
