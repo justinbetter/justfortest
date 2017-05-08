@@ -73,19 +73,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 testNewRomInfo();
                 break;
             case R.id.button_default:
-                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_DEFAULT));
+                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_DEFAULT);
                 break;
             case R.id.button_prepare:
-                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_PREPARE));
+                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_PREPARE);
                 break;
             case R.id.button_download:
-                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_DOWNLOAD));
+                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_DOWNLOAD);
                 break;
             case R.id.button_verify:
-                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_VERIFY));
+                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_VERIFY);
                 break;
             case R.id.button_install:
-                romUpdateStateMachine.getHandler().sendMessage(romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_INSTALL));
+                romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_INSTALL);
                 break;
 
         }
@@ -139,7 +139,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 });
 
             }
-            romUpdateStateMachine.obtainMessage(RomUpdateStateMachine.CMD_PREPARE);
+            romUpdateStateMachine.sendMessage(RomUpdateStateMachine.CMD_PREPARE);
         }
     }
 
