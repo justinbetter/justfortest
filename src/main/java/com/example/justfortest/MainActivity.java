@@ -209,8 +209,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private Observable<RomInfoResult> _real_checkRomVersion() {
-        return null;
-    }
+        L.i("success checkRomVersion");
+        return Observable.create(new Observable.OnSubscribe<RomInfoResult>() {
+            @Override
+            public void call(Subscriber<? super RomInfoResult> subscriber) {
+                try {
+                    String success= null;
+                    String fakeRomSuccess = "{\"status\": {\"code\": 0}, \"rominfo\": {\"tts\": \"奥特曼变身成功\", \"install_mode\": \"force\", \"play_count\": -1, \"rom_map\": {\"version\": \"xxxxx\", \"name\": \"factory_update.zip\", \"time\": \"1493020824\", \"url\": \"D:\\\\tempdir\\\\tinker_multi\\\\factory_update.zip\", \"size\": 324045340, \"version_code\": 170419, \"id\": \"dx0016\", \"md5\": \"e3bb15f778ac11148a3332c4dac6869c\", \"description\": \"xxx\"}, \"dialog_map\": {\"content\": \"升级后唤醒率更高, 识别更准确, 请立即升级\", \"button_negative_text\": \"下次点火提醒我\", \"button_positive_visual\": true, \"default_select\": \"positive\", \"button_positive_text\": \"去升级\", \"title\": \"ROM有新版本发布\", \"button_negative_visual\": true, \"auto_close\": true, \"auto_close_time\": 8}}, \"extend\": {\"LLA00XX_B01_170418\": {\"version_code\": \"170418\", \"extra2\": \"222\"}}}";
+                    String fakeRomError = "{\"status\": {\"code\": -1}, \"rominfo\": {\"tts\": \"奥特曼变身失败\", \"install_mode\": \"force\", \"play_count\": -1, \"rom_map\": {\"version\": \"xxxxx\", \"name\": \"factory_update.zip\", \"time\": \"1493020824\", \"url\": \"D:\\\\tempdir\\\\tinker_multi\\\\factory_update.zip\", \"size\": 324045340, \"version_code\": 170419, \"id\": \"dx0016\", \"md5\": \"e3bb15f778ac11148a3332c4dac6869c\", \"description\": \"xxx\"}, \"dialog_map\": {\"content\": \"升级后唤醒率更高, 识别更准确, 请立即升级\", \"button_negative_text\": \"下次点火提醒我\", \"button_positive_visual\": true, \"default_select\": \"positive\", \"button_positive_text\": \"去升级\", \"title\": \"ROM有新版本发布\", \"button_negative_visual\": true, \"auto_close\": true, \"auto_close_time\": 8}}, \"extend\": {\"LLA00XX_B01_170418\": {\"version_code\": \"170418\", \"extra2\": \"222\"}}}";
+                    RomInfoResult result = TextUtils.isEmpty(success) ? LoganSquare.parse(fakeRomError, RomInfoResult.class) :
+                            LoganSquare.parse(fakeRomSuccess, RomInfoResult.class);
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });    }
 
     private void _handleRomInfoResult(RomInfoResult netRomInfoResult) {
         try {
