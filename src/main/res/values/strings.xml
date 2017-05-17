@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">JustForTest</string>
+    <!-- Content description for bluetooth volume icon [CHAR LIMIT=100] -->
+    <string name="volume_icon_description_bluetooth">Bluetooth volume</string>
+    <!-- Content description for ringer volume icon [CHAR LIMIT=100] -->
+    <string name="volume_icon_description_ringer">Ringtone volume</string>
+    <!-- Content description for in-call volume icon [CHAR LIMIT=100] -->
+    <string name="volume_icon_description_incall">Call volume</string>
+    <!-- Content description for media volume icon [CHAR LIMIT=100] -->
+    <string name="volume_icon_description_media">Media volume</string>
+    <!-- Content description for notification volume icon [CHAR LIMIT=100] -->
+    <string name="volume_icon_description_notification">Notification volume</string>
+
+    <!-- Title of the dialog where the user is adjusting the phone ringer volume -->
+    <string name="volume_ringtone">Ringer volume</string>
+    <!-- Title of the dialog where the user is adjusting the music volume -->
+    <string name="volume_music">Media volume</string>
+    <!-- Hint shown in the volume toast to inform the user that the media audio is playing through Bluetooth. -->
+    <string name="volume_music_hint_playing_through_bluetooth">Playing through Bluetooth</string>
+    <!-- Hint shown in the volume toast to inform the user that the current ringtone is the silent ringtone. -->
+    <string name="volume_music_hint_silent_ringtone_selected">Silent ringtone set</string>
+    <!-- Title of the dialog where the user is adjusting the phone call volume -->
+    <string name="volume_call">In-call volume</string>
+    <!-- Title of the dialog where the user is adjusting the phone call volume when connected on bluetooth-->
+    <string name="volume_bluetooth_call">Bluetooth in-call volume</string>
+    <!-- Title of the dialog where the user is adjusting the audio volume for alarms -->
+    <string name="volume_alarm">Alarm volume</string>
+    <!-- Title of the dialog where the user is adjusting the audio volume for notifications -->
+    <string name="volume_notification">Notification volume</string>
+    <!-- Title of the dialog where the user is adjusting the general audio volume -->
+    <string name="volume_unknown">Volume</string>
+
 </resources>
