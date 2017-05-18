@@ -1,4 +1,4 @@
-package com.example.justfortest;
+package com.example.justfortest.bsdiff;
 
 /**
  * Created by justi on 2017/3/29.

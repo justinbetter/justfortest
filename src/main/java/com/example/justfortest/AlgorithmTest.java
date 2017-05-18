@@ -4,7 +4,7 @@ package com.example.justfortest;
  * Created by justi on 2017/5/10.
  */
 
-public class Test {
+public class AlgorithmTest {
 
 
     public static void main(String[] args) {

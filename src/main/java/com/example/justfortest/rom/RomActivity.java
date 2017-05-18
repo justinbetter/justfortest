@@ -1,4 +1,4 @@
-package com.example.justfortest;
+package com.example.justfortest.rom;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,10 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.example.justfortest.rom.Mock;
-import com.example.justfortest.rom.RomInfoResult;
-import com.example.justfortest.rom.RomTask;
-import com.example.justfortest.rom.RomUpdateStateMachine;
+import com.example.justfortest.R;
 import com.example.justfortest.utils.CommonUtils;
 import com.example.justfortest.utils.RxUtils;
 import com.tuyou.tsd.common.Version;
@@ -40,7 +37,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class RomActivity extends Activity implements View.OnClickListener {
 
     private String TAG = "justin";
     private boolean _isRomNotice;

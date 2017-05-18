@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.tuyou.tsd.common.TSDEvent;
 import com.tuyou.tsd.common.base.BaseService;
 import com.tuyou.tsd.common.util.L;
 
@@ -37,19 +38,20 @@ public class VolumeService extends BaseService {
                     //弹出音量控制
                     showVolumeActivity();
                 }else if (action.equals("android.media.VOLUME_CHANGED_ACTION")) {
-                    L.d("justin","volume change");
-                    //显示
-                    if (!isVolumeShow) {
-                        showVolumeActivity();
-                    }
-
+                    //TODO 暂时不做
                 } else if (action.equals(BROADCASR_ACTION_IS_VOLUME_SHOW)) {
                     L.d("justin","broadcasr_action_is_volume_show");
                     isVolumeShow = intent.getBooleanExtra("volume", false);
+                } else if (action.equals(TSDEvent.System.HARDKEY_VOLUME)) {
+                    //弹出音量控制
+                    if (!isVolumeShow) {
+                        showVolumeActivity();
+                    }
                 }
             }
         }
     }
+
 
     private void showVolumeActivity() {
         Intent activityIntent = new Intent();
@@ -59,8 +61,10 @@ public class VolumeService extends BaseService {
     }
 
     private void listenToVolumeChange() {
+
         final IntentFilter filter = new IntentFilter();
-        filter.addAction("android.media.VOLUME_CHANGED_ACTION");
+//        filter.addAction("android.media.VOLUME_CHANGED_ACTION");
+        filter.addAction(TSDEvent.System.HARDKEY_VOLUME);
         filter.addAction(BROADCASR_ACTION_IS_VOLUME_SHOW);
         registerReceiver(filter);
     }

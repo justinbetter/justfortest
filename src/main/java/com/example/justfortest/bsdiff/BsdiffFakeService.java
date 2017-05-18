@@ -1,4 +1,4 @@
-package com.example.justfortest;
+package com.example.justfortest.bsdiff;
 
 import android.content.Context;
 import android.content.Intent;
