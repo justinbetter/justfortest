@@ -4,7 +4,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def env = "-"+(System.getProperty("env")?:System.getenv()["USERDOMAIN"])
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 22
     buildToolsVersion "25.0.2"
 
     signingConfigs {
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.example.justfortest"
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
 
