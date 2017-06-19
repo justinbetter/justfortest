@@ -8,12 +8,19 @@ import android.os.Message
 import android.util.Log
 import com.example.justfortest.utils.BluetoothReflectUtils
 import com.tuyou.tsd.common.base.BaseService
-import com.tuyou.tsd.common.util.ReflectUtil
+
 
 /**
  * Created by justi on 2017/6/14.
  */
-class BluetoothService : BaseService() {
+class BluetoothServiceBefore : BaseService() {
+    companion object {
+        @JvmStatic
+        val HEADSET_ACTION_CALL = "bluetooth.BluetoothServiceBefore.action.call"
+        @JvmStatic
+        val HEADSET_ACTION_TERMINAL = "bluetooth.BluetoothServiceBefore.action.terminal"
+
+    }
 
 
     /**
@@ -24,11 +31,13 @@ class BluetoothService : BaseService() {
     val mBluetoothAdapter: BluetoothAdapter by lazy {
         BluetoothAdapter.getDefaultAdapter()
     }
+    var mRemoteDevice: BluetoothDevice? = null
     private val HFP_PROFILE = getHFPProfileIndex()
 
     private fun getHFPProfileIndex(): Int {
         return 16
     }
+
     var mBluetoothHeadset: Any? = null
 
     var mServiceListener: BluetoothProfile.ServiceListener = object : BluetoothProfile.ServiceListener {
@@ -39,6 +48,7 @@ class BluetoothService : BaseService() {
                 mBluetoothHeadset = null
             }
         }
+
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
             Log.d(TAG, "接听搭建成功：$profile,$proxy")
             if (profile == getHFPProfileIndex()) {
@@ -58,18 +68,19 @@ class BluetoothService : BaseService() {
         super.onCreate()
         initBT()
         initBroadcast()
+        val tricheerBluetoothHeadsetController = TricheerBluetoothHeadsetController(applicationContext)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-//        mBluetoothAdapter.closeProfileProxy(getHFPProfileIndex(), mBluetoothHeadset)
+        mBluetoothAdapter.closeProfileProxy(getHFPProfileIndex(), mBluetoothHeadset as BluetoothProfile)
     }
+
 
     private fun initBT() {
         mBluetoothAdapter.enable()
         //设置可被连接
-        setConnectableDisacoverableMode()
-
+        BluetoothReflectUtils.setConnectableDisacoverableMode(mBluetoothAdapter)
         //设置协议
         mBluetoothAdapter.getProfileProxy(applicationContext, mServiceListener, getHFPProfileIndex())
 
@@ -91,16 +102,34 @@ class BluetoothService : BaseService() {
         with(msg.obj as Intent) {
             Log.d(TAG, "action: $action")
             when (action) {
-                BluetoothAdapter.ACTION_STATE_CHANGED               -> Log.d(TAG, "action: " + action + "/n  state" + getIntExtra(BluetoothAdapter.EXTRA_STATE, -1))
-                BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED    -> handleConnectionState(this)
-                BluetoothDevice.ACTION_PAIRING_REQUEST              -> handleParingRequest(this)
-                BluetoothDevice.ACTION_BOND_STATE_CHANGED           -> handleBondState(this)
-                else                                                -> Log.d(TAG, "not handle  action" + action)
+                BluetoothAdapter.ACTION_STATE_CHANGED -> handleStateChaned(this)
+                BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> handleConnectionState(this)
+                BluetoothDevice.ACTION_PAIRING_REQUEST -> handleParingRequest(this)
+                BluetoothDevice.ACTION_BOND_STATE_CHANGED -> handleBondState(this)
+                HEADSET_ACTION_CALL, HEADSET_ACTION_TERMINAL -> handleHeadsetAction(this)
+                else -> Log.d(TAG, "not handle action" + action)
 
             }
         }
 
 
+    }
+
+    private fun handleHeadsetAction(intent: Intent) {
+        when (intent.action) {
+            HEADSET_ACTION_CALL -> mRemoteDevice?.let {
+                if (BluetoothReflectUtils.getConnectionState(mBluetoothHeadset!!, it) == BluetoothProfile.STATE_CONNECTED) {
+                    BluetoothReflectUtils.dial(mBluetoothHeadset!!, it, intent.getStringExtra("number"))
+                }
+            }
+
+
+        }
+    }
+
+
+    private fun handleStateChaned(intent: Intent) {
+        Log.d(TAG, "action: " + intent.action + "/n  BTstate" + intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1))
     }
 
     /**
@@ -109,27 +138,14 @@ class BluetoothService : BaseService() {
     private fun handleConnectionState(intent: Intent) {
         val bluetoothConnectState = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1)
         val bondedDevice: BluetoothDevice = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-
-
-        var headsetConnectState:Boolean = false
-        Log.d(TAG, "action: " + intent.action + "\n  connect_state:" + bluetoothConnectState+"\n bondedevice $bondedDevice")
+        var headsetConnectState: Boolean = false
+        Log.d(TAG, "action: " + intent.action + "\n  connect_state:" + bluetoothConnectState + "\n bondedevice $bondedDevice")
         if (bluetoothConnectState == BluetoothAdapter.STATE_CONNECTED) {
+            mRemoteDevice = bondedDevice
             BluetoothReflectUtils.connect(mBluetoothHeadset!!, bondedDevice)
-//            Log.d(TAG, "hfp: connect $headsetConnectState")
-
-            val connectionState = BluetoothReflectUtils.getConnectionState(mBluetoothHeadset!!, bondedDevice)
-            Log.d(TAG, "connstate: $connectionState")
-
-            if (connectionState == BluetoothProfile.STATE_CONNECTED) {
-                BluetoothReflectUtils.dial(mBluetoothHeadset!!,bondedDevice,"17602142076")
-
-            }
-
-
+        }else if (bluetoothConnectState == BluetoothAdapter.STATE_DISCONNECTED) {
+            BluetoothReflectUtils.disconnect(mBluetoothHeadset!!, bondedDevice)
         }
-
-
-
     }
 
     /**
@@ -142,9 +158,6 @@ class BluetoothService : BaseService() {
         if (bondState == BluetoothDevice.BOND_BONDED) {
             //hfp
             Log.d(TAG, "已连接！可以打电话了")
-        } else {
-
-
         }
 
 
@@ -158,13 +171,6 @@ class BluetoothService : BaseService() {
         bluetoothDevice.setPairingConfirmation(true)
         Log.d(TAG, "配对成功" + intent.action)
 
-
-    }
-
-
-    private fun setConnectableDisacoverableMode() {
-        ReflectUtil.inVoke(mBluetoothAdapter, ReflectUtil.getMethod(BluetoothAdapter::class.java.canonicalName,
-                "setScanMode", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType), BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE, 0)
     }
 
 

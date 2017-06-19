@@ -36,7 +36,7 @@
             android:name=".volume.VolumeService"
             android:enabled="true"
             android:exported="true" />
-        <service android:name=".bluetooth.BluetoothService" />
+        <service android:name=".bluetooth.BluetoothHeadsetService" />
         <activity android:name=".volume.ShowVolumeActivity" android:theme="@style/DialogActivityStyle"></activity>
     </application>
 

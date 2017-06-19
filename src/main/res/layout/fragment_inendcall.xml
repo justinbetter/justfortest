@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="32dp" android:textColor="#ff00a0e6" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="46dp" android:text="通话中" />
+    <TextView android:textSize="28dp" android:textColor="#ffcccccc" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/timer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="30dp" android:text="00:00" />
+    <Button android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/terminal" android:background="@drawable/selector_reject" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="50dp" />
+</LinearLayout>

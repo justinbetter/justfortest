@@ -1,5 +1,6 @@
 package com.example.justfortest.utils
 
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import com.tuyou.tsd.common.util.ReflectUtil
 
@@ -27,8 +28,33 @@ object BluetoothReflectUtils{
         return ReflectUtil.inVoke(paramObject, ReflectUtil.getMethod(BluetoothHeadsetClassName, "getConnectionState", *arrayOf<Class<*>>(BluetoothDevice::class.java)), *arrayOf<Any>(paramBluetoothDevice)) as Int
     }
 
+    @JvmStatic
+    fun acceptCall(paramObject: Any, paramBluetoothDevice: BluetoothDevice, paramInt: Int): Boolean {
+        return ReflectUtil.inVoke(paramObject, ReflectUtil.getMethod(BluetoothHeadsetClassName, "acceptCall", BluetoothDevice::class.java, Int::class.javaPrimitiveType),
+                paramBluetoothDevice, paramInt) as Boolean
+    }
+
+    @JvmStatic
+    fun disconnect(paramObject: Any, paramBluetoothDevice: BluetoothDevice): Boolean {
+        return ReflectUtil.inVoke(paramObject, ReflectUtil.getMethod(BluetoothHeadsetClassName, "disconnect", *arrayOf<Class<*>>(BluetoothDevice::class.java)), *arrayOf<Any>(paramBluetoothDevice)) as Boolean
+    }
+
+    @JvmStatic
+    fun rejectCall(paramObject: Any, paramBluetoothDevice: BluetoothDevice): Boolean {
+        return ReflectUtil.inVoke(paramObject, ReflectUtil.getMethod(BluetoothHeadsetClassName, "rejectCall", *arrayOf<Class<*>>(BluetoothDevice::class.java)), *arrayOf<Any>(paramBluetoothDevice)) as Boolean
+    }
 
 
+    @JvmStatic
+    fun terminateCall(paramObject: Any, paramBluetoothDevice: BluetoothDevice, paramInt: Int): Boolean {
+        return ReflectUtil.inVoke(paramObject, ReflectUtil.getMethod(BluetoothHeadsetClassName, "terminateCall", BluetoothDevice::class.java, Int::class.javaPrimitiveType),
+                paramBluetoothDevice, paramInt) as Boolean
+    }
 
+    @JvmStatic
+    fun setConnectableDisacoverableMode(mBluetoothAdapter:BluetoothAdapter) {
+        ReflectUtil.inVoke(mBluetoothAdapter, ReflectUtil.getMethod(BluetoothAdapter::class.java.canonicalName,
+                "setScanMode", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType), BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE, 0)
+    }
 
 }

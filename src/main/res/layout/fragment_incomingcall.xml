@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="40dp" android:textColor="#ffcccccc" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/name" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="38dp" android:text="浙江深圳" android:layout_weight="1.0" />
+    <TextView android:textSize="40dp" android:textColor="#ff00a0e6" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/number" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp" android:text="15505882339" android:layout_weight="1.0" />
+    <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="40dp" android:layout_weight="2.0">
+        <Button android:id="@+id/accept" android:background="@drawable/selector_accept" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="32dp" />
+        <Button android:id="@+id/reject" android:background="@drawable/selector_reject" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="32dp" />
+    </LinearLayout>
+</LinearLayout>

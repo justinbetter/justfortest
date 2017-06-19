@@ -9,6 +9,7 @@ import android.os.StatFs;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.example.justfortest.R;
 import com.tuyou.tsd.common.util.FileUtils;
 import com.tuyou.tsd.common.util.L;
 import com.tuyou.tsd.common.util.MD5;
@@ -26,7 +27,6 @@ public class CommonUtils {
 
     public static boolean validFile(String filename, long fileSize, String checksum) {
         boolean ret = false;
-
         // 文件不存在,或者大小不对
         long realFileSize = FileUtils.getFileSize(filename);
         if (realFileSize == -1) {
