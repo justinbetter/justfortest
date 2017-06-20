@@ -20,6 +20,7 @@ class BluetoothServiceBefore : BaseService() {
         @JvmStatic
         val HEADSET_ACTION_TERMINAL = "bluetooth.BluetoothServiceBefore.action.terminal"
 
+
     }
 
 

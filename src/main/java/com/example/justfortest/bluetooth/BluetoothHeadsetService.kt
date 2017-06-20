@@ -11,6 +11,7 @@ import com.tuyou.tsd.common.base.BaseService
  * Created by justi on 2017/6/19.
  */
 class BluetoothHeadsetService : BaseService() {
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }

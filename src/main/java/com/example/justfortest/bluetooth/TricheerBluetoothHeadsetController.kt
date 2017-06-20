@@ -13,7 +13,20 @@ import com.tuyou.tsd.common.util.L
  */
 class TricheerBluetoothHeadsetController(context: Context) : AbstractBluetoothHeadsetController(context) {
 
+    companion object {
+        @JvmStatic
+        val HEADSET_ACTION_DIAL = "bluetooth.TricheerBluetoothHeadsetController.action.dial"
+        @JvmStatic
+        val HEADSET_ACTION_ACCEPTCALL = "bluetooth.TricheerBluetoothHeadsetController.action.acceptCall"
+        @JvmStatic
+        val HEADSET_ACTION_REJECTCALL = "bluetooth.TricheerBluetoothHeadsetController.action.rejectCall"
+        @JvmStatic
+        val HEADSET_ACTION_TERMINATECALL = "bluetooth.TricheerBluetoothHeadsetController.action.terminateCall"
 
+
+
+
+    }
     //hs remote device
     private var mRemoteDevice: BluetoothDevice? = null
     override fun getHFPProfileIndex(): Int {return 16}
@@ -34,9 +47,9 @@ class TricheerBluetoothHeadsetController(context: Context) : AbstractBluetoothHe
                 BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED        -> handleConnectionState(this)
                 BluetoothDevice.ACTION_PAIRING_REQUEST                  -> handleParingRequest(this)
                 BluetoothDevice.ACTION_BOND_STATE_CHANGED               -> handleBondState(this)
-                BluetoothServiceBefore.HEADSET_ACTION_CALL, BluetoothServiceBefore.HEADSET_ACTION_TERMINAL -> handleHeadsetAction(this)
-                else -> L.d( "not handle action" + action)
-
+                HEADSET_ACTION_DIAL, HEADSET_ACTION_ACCEPTCALL, HEADSET_ACTION_REJECTCALL, HEADSET_ACTION_TERMINATECALL
+                                                                        -> handleHeadsetAction(this)
+                else                                                    -> L.d( "not handle action" + action)
             }
         }
     }
@@ -95,21 +108,26 @@ class TricheerBluetoothHeadsetController(context: Context) : AbstractBluetoothHe
      * 蓝牙电话协议action
      */
     private fun handleHeadsetAction(intent: Intent) {
-        if (mBluetoothHeadset == null && mRemoteDevice == null) {
-            L.d("mBluetoothHeadset == null && mRemoteDevice == null!")
+        if (mBluetoothHeadset == null ||  mRemoteDevice == null) {
+            L.d("mBluetoothHeadset == null || mRemoteDevice == null!")
+            return
+        }else if (BluetoothReflectUtils.getConnectionState(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice) != BluetoothProfile.STATE_CONNECTED){
+            L.d("connectionstate is  not BluetoothProfile.STATE_CONNECTED")
             return
         }else{
             when (intent.action) {
-                BluetoothServiceBefore.HEADSET_ACTION_CALL -> {
-                    if (BluetoothReflectUtils.getConnectionState(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice) == BluetoothProfile.STATE_CONNECTED) {
-                        BluetoothReflectUtils.dial(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice, intent.getStringExtra("number"))
-                    }
+                HEADSET_ACTION_DIAL -> {
+                    BluetoothReflectUtils.dial(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice, intent.getStringExtra("number"))
                 }
-                BluetoothServiceBefore.HEADSET_ACTION_TERMINAL->{
-
+                HEADSET_ACTION_ACCEPTCALL -> {
+                    BluetoothReflectUtils.acceptCall(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice,0)
                 }
-
-
+                HEADSET_ACTION_REJECTCALL -> {
+                    BluetoothReflectUtils.rejectCall(mBluetoothHeadset as Any,mRemoteDevice as BluetoothDevice)
+                }
+                HEADSET_ACTION_TERMINATECALL->{
+                    BluetoothReflectUtils.terminateCall(mBluetoothHeadset as Any, mRemoteDevice as BluetoothDevice,0)
+                }
             }
         }
     }

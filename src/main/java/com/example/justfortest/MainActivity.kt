@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import com.example.justfortest.R.id.number
 import com.example.justfortest.bluetooth.BluetoothHeadsetService
-import com.example.justfortest.bluetooth.BluetoothServiceBefore
+import com.example.justfortest.bluetooth.TricheerBluetoothHeadsetController
 
 /**
  * Created by justi on 2017/6/15.
@@ -41,19 +42,39 @@ class MainActivity : Activity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btn_call   -> sendHeadsetCallAction(mEtText?.text.toString())
+            R.id.btn_call     -> sendHeadsetCallAction(mEtText?.text.toString())
+            R.id.accept       -> sendHeadsetAcceptAcion()
+            R.id.btn_refuse   -> sendHeadsetRejectAcion()
+            R.id.btn_terminal -> sendHeadsetTerminateAction()
             else            -> return
         }
     }
 
     private fun sendHeadsetCallAction(number:String) {
+        startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_DIAL,"number",number)
+    }
+    private fun sendHeadsetAcceptAcion() {
+        startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_ACCEPTCALL)
+    }
+    private fun sendHeadsetRejectAcion() {
+        startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_REJECTCALL)
+    }
+    private fun sendHeadsetTerminateAction() {
+        startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_TERMINATECALL)
+    }
+
+    private fun startBtHeadsetService(action: String) {
         val intent = Intent(this@MainActivity, BluetoothHeadsetService::class.java)
-        intent.action = BluetoothServiceBefore.HEADSET_ACTION_CALL
+        intent.action = action
         intent.putExtra("number", number)
         startService(intent)
     }
-
-
+    private fun startBtHeadsetService(action:String,name:String,value: String) {
+        val intent = Intent(this@MainActivity, BluetoothHeadsetService::class.java)
+        intent.action = action
+        intent.putExtra(name, value)
+        startService(intent)
+    }
 
 
 }
