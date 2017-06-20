@@ -28,7 +28,7 @@ abstract class AbstractBluetoothHeadsetController (context: Context){
 
         override fun onServiceDisconnected(profile: Int) {
             L.d("profile onServiceDisconnected：$profile")
-            if (profile == BluetoothProfile.HEADSET) {
+            if (profile == getHFPProfileIndex()) {
                 mBluetoothHeadset = null
             }
         }
