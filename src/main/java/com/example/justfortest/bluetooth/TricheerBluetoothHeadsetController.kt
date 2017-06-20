@@ -31,8 +31,8 @@ class TricheerBluetoothHeadsetController(context: Context) : AbstractBluetoothHe
     private var mRemoteDevice: BluetoothDevice? = null
     override fun getHFPProfileIndex(): Int {return 16}
     override fun enter() {
-        mBluetoothAdapter.getProfileProxy(context, mServiceListener, getHFPProfileIndex())
         mBluetoothAdapter.enable()
+        mBluetoothAdapter.getProfileProxy(context, mServiceListener, getHFPProfileIndex())
         BluetoothReflectUtils.setConnectableDisacoverableMode(mBluetoothAdapter)
     }
     override fun exit() {
