@@ -3,5 +3,28 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="volume_panel_top">80dp</dimen>
+    <!-- Dimensions for Emergency Dialer and dialpad inside the in-call screen -->
+    <dimen name="dialpad_horizontal_margin">4dp</dimen>
+    <dimen name="dialpad_vertical_margin">2dp</dimen>
+
+
+    <!-- Text dimensions for dialpad keys -->
+    <dimen name="dialpad_key_numbers_size">40sp</dimen>
+    <dimen name="dialpad_key_letters_size">13sp</dimen>
+    <dimen name="dialpad_key_star_size">26sp</dimen>
+    <dimen name="dialpad_key_pound_size">26sp</dimen>
+    <dimen name="dialpad_key_numbers_width">30dp</dimen>
+    <dimen name="dialpad_key_letters_width">50dp</dimen>
+    <dimen name="dialpad_key_height">56dp</dimen>
+    <dimen name="dialpad_key_plus_size">18sp</dimen>
+    <dimen name="dialpad_number_to_letters_padding">11dp</dimen>
+    <dimen name="dialpad_horizontal_padding">5dp</dimen>|
+    <dimen name="dialpad_key_star_pound_size">26sp</dimen>
+
+    <dimen name="dialpad_digits_height">47dp</dimen>
+    <dimen name="dialpad_digits_padding">16dp</dimen>
+    <dimen name="dialpad_digits_margin_bottom">0px</dimen>
+
+
 
 </resources>

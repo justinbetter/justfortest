@@ -18,20 +18,22 @@ class MainActivity : Activity(), View.OnClickListener {
 
 
     var mEtText: EditText? = null
+    var mEtText2: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setContentView(R.layout.dialpad_fragment)
         setContentView(R.layout.activity_show)
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         bluetoothAdapter?.let {
             (findViewById(R.id.title) as TextView).text = bluetoothAdapter.name
         }
         mEtText = findViewById(R.id.et_number_text) as EditText?
-        val ids = intArrayOf(R.id.btn_call, R.id.btn_accept, R.id.btn_refuse, R.id.btn_terminal)
+        mEtText2 = findViewById(R.id.et_number_text2) as EditText?
+        val ids = intArrayOf(R.id.btn_audio,R.id.btn_sendtmf,R.id.btn_call, R.id.btn_accept, R.id.btn_refuse, R.id.btn_terminal)
         for (id in ids) {
             findViewById(id).setOnClickListener(this)
         }
-
 
     }
 
@@ -42,10 +44,13 @@ class MainActivity : Activity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.btn_audio    -> startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_CONNECTAUDIO)
+            R.id.btn_sendtmf  -> startBtHeadsetService(TricheerBluetoothHeadsetController.HEADSET_ACTION_SENDDTMF,"number",mEtText2?.text.toString())
             R.id.btn_call     -> sendHeadsetCallAction(mEtText?.text.toString())
             R.id.accept       -> sendHeadsetAcceptAcion()
             R.id.btn_refuse   -> sendHeadsetRejectAcion()
             R.id.btn_terminal -> sendHeadsetTerminateAction()
+
             else            -> return
         }
     }

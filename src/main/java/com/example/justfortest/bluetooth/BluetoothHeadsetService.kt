@@ -31,6 +31,7 @@ class BluetoothHeadsetService : BaseService() {
         registerReceiver(BluetoothDevice.ACTION_PAIRING_REQUEST)
         registerReceiver(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
         registerReceiver("android.bluetooth.headsetclient.profile.action.AG_CALL_CHANGED")
+        registerReceiver("android.bluetooth.headsetclient.profile.action.CONNECTION_STATE_CHANGED")
     }
 
 

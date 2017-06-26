@@ -24,21 +24,5 @@ abstract class AbstractBluetoothHeadsetController (context: Context){
         BluetoothAdapter.getDefaultAdapter()
     }
     var mBluetoothHeadset: Any? = null
-    var mServiceListener: BluetoothProfile.ServiceListener = object : BluetoothProfile.ServiceListener {
 
-        override fun onServiceDisconnected(profile: Int) {
-            L.d("profile onServiceDisconnected：$profile")
-            if (profile == getHFPProfileIndex()) {
-                mBluetoothHeadset = null
-            }
-        }
-
-        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
-            L.d("profile onServiceConnected：$profile,$proxy")
-            if (profile == getHFPProfileIndex()) {
-                mBluetoothHeadset = proxy
-                L.d("proxy: $profile,mheadset:$mBluetoothHeadset")
-            }
-        }
-    }
 }
