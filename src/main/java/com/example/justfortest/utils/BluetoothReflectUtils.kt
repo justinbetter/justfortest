@@ -2,6 +2,7 @@ package com.example.justfortest.utils
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import com.tuyou.tsd.common.TSDDevice
 import com.tuyou.tsd.common.util.ReflectUtil
 
 /**
@@ -11,7 +12,11 @@ object BluetoothReflectUtils{
 
 
     @JvmField
-    val BluetoothHeadsetClassName = "android.bluetooth.BluetoothHeadsetClient"
+    val BluetoothHeadsetClassName =when(TSDDevice.TSDBrand.BRAND){
+        TSDDevice.TSDBrand.ZHIXING ->"android.bluetooth.BluetoothHandsfreeClient"
+        TSDDevice.TSDBrand.TRICHEER -> "android.bluetooth.BluetoothHeadsetClient"
+        else->"android.bluetooth.BluetoothHandsfreeClient"
+    }
 
     @JvmStatic
     fun connect(paramObject: Any, paramBluetoothDevice: BluetoothDevice): Boolean {

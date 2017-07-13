@@ -29,7 +29,7 @@ for file in listdir:
         # shutil.copy(apk_dir, dst_dir)
         #bat
         # os.chdir(dst_dir)
-        os.system("adb shell rm /system/priv-app/just/"+ apk)
+        os.system("adb shell rm /system/priv-app/*ota* "+ apk)
         os.system("adb root")
         os.system("adb remount")
         os.system("adb push "+apk_dir+" /system/priv-app/just/"+apk)
