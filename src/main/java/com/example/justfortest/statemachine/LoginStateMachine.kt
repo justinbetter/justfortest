@@ -15,7 +15,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
     }
 
     abstract class BaseState(val stateMachine: LoginStateMachine) : State() {
-
+        var message: Message? = null
         override fun enter() {
             super.enter()
             stateMachine.L.onStateEnter(this)
@@ -24,6 +24,12 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun exit() {
             super.exit()
         }
+    }
+
+    private fun transitionToState(msg: Message?){
+        val state = stateMap[msg!!.what] as BaseState
+        state.message = msg
+        transitionTo(state)
     }
 
     val L: OnStateChangeListener = listener
@@ -72,7 +78,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
             with(stateMachine) {
                 when (msg?.what) {
                     MESSAGE_LOGIN, MESSAGE_LOGINOUT -> {
-                        transitionTo(stateMap[msg.what])
+                        transitionToState(msg)
                         return IState.HANDLED
                     }
                     else                            -> {
@@ -84,21 +90,19 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
     }
 
 
-    class Login(stateMachine: LoginStateMachine) : LoginStateMachine.BaseState(stateMachine) {
+    class Login(stateMachine: LoginStateMachine) : BaseState(stateMachine) {
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN -> {
-                        transitionTo(stateMap[msg.what])
-                        return IState.HANDLED
+                    MESSAGE_LOGIN ->{
+                        return  IState.HANDLED
                     }
-                    MESSAGE_LOGINOUT                         -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN -> {
+                        transitionToState(msg)
                         return IState.HANDLED
                     }
                     else                                     -> {
-                        return IState.HANDLED
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -109,13 +113,11 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGIN -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_LOGINOUT -> {
                         return IState.HANDLED
                     }
-                    else          -> {
-                        return IState.HANDLED
+                    else             -> {
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -126,17 +128,15 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_SUCCESS, MESSAGE_TEMP_FAIL -> {
-                        transitionTo(stateMap[msg.what])
+                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN->{
                         return IState.HANDLED
                     }
-                    MESSAGE_LOGINOUT                        -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_TEMP_SUCCESS, MESSAGE_TEMP_FAIL  -> {
+                        transitionToState(msg)
                         return IState.HANDLED
                     }
-                    else                                    -> {
-                        return IState.HANDLED
+                    else                                     -> {
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -148,13 +148,11 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
 
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGINOUT -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_TEMP_SUCCESS,MESSAGE_TEMP_FAIL->{
                         return IState.HANDLED
                     }
                     else             -> {
-                        return IState.HANDLED
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -166,13 +164,11 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGIN, MESSAGE_LOGINOUT -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_TEMP_SUCCESS,MESSAGE_TEMP_FAIL->{
                         return IState.HANDLED
                     }
                     else                            -> {
-                        return IState.HANDLED
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -183,17 +179,15 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL -> {
-                        transitionTo(stateMap[msg.what])
+                    MESSAGE_TEMP_LOGIN,MESSAGE_NORMAL_LOGIN->{
                         return IState.HANDLED
                     }
-                    MESSAGE_LOGINOUT                            -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL -> {
+                        transitionToState(msg)
                         return IState.HANDLED
                     }
                     else                                        -> {
-                        return IState.HANDLED
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -204,13 +198,11 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGINOUT       -> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL-> {
                         return IState.HANDLED
                     }
-                    else                   -> {
-                        return IState.HANDLED
+                    else                                        -> {
+                        return super.processMessage(msg)
                     }
                 }
             }
@@ -221,13 +213,11 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGIN, MESSAGE_LOGINOUT-> {
-                        deferMessage(msg)
-                        transitionTo(mDefault)
+                    MESSAGE_NORMAL_SUCCESS,MESSAGE_NORMAL_FAIL-> {
                         return IState.HANDLED
                     }
                     else                            -> {
-                        return IState.HANDLED
+                        return super.processMessage(msg)
                     }
                 }
             }
