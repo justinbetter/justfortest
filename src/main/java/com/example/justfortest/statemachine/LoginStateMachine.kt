@@ -12,6 +12,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
 
     interface OnStateChangeListener {
         fun onStateEnter(state: BaseState)
+        fun handleCondition(msg: Message?)
     }
 
     abstract class BaseState(val stateMachine: LoginStateMachine) : State() {
@@ -53,6 +54,8 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         val MESSAGE_NORMAL_LOGIN = 106
         val MESSAGE_NORMAL_SUCCESS = 107
         val MESSAGE_NORMAL_FAIL = 108
+        val MESSAGE_TRY_LOGIN = 109
+        val MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE = 110
 
     }
 
@@ -63,10 +66,10 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         addState(login, mDefault)
         addState(tempLogin, login)
         addState(tempSuccess, tempLogin)
-        addState(tempFail, tempLogin)
+        addState(tempFail, mDefault)
         addState(normalLogin, login)
         addState(normalSuccess, normalLogin)
-        addState(normalFail, normalLogin)
+        addState(normalFail, mDefault)
         addState(loginOut, mDefault)
         setInitialState(mDefault)
 
@@ -77,24 +80,27 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGIN, MESSAGE_LOGINOUT -> {
+                    MESSAGE_TRY_LOGIN, MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE ->{
+                        stateMachine.L.handleCondition(msg)
+                        return IState.HANDLED
+                    }
+                    MESSAGE_LOGIN, MESSAGE_LOGINOUT                           -> {
                         transitionToState(msg)
                         return IState.HANDLED
                     }
-                    else                            -> {
-                        return IState.HANDLED
+                    else                                                      -> {
+                        return IState.NOT_HANDLED
                     }
                 }
             }
         }
     }
 
-
     class Login(stateMachine: LoginStateMachine) : BaseState(stateMachine) {
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGIN ->{
+                    MESSAGE_TRY_LOGIN, MESSAGE_LOGIN         ->{
                         return  IState.HANDLED
                     }
                     MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN -> {
@@ -113,7 +119,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_LOGINOUT -> {
+                    MESSAGE_LOGINOUT,MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE -> {
                         return IState.HANDLED
                     }
                     else             -> {
@@ -128,7 +134,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN->{
+                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN ->{
                         return IState.HANDLED
                     }
                     MESSAGE_TEMP_SUCCESS, MESSAGE_TEMP_FAIL  -> {
@@ -148,10 +154,10 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
 
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_SUCCESS,MESSAGE_TEMP_FAIL->{
+                    MESSAGE_TEMP_SUCCESS, MESSAGE_TEMP_FAIL ->{
                         return IState.HANDLED
                     }
-                    else             -> {
+                    else                                    -> {
                         return super.processMessage(msg)
                     }
                 }
@@ -164,10 +170,10 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_SUCCESS,MESSAGE_TEMP_FAIL->{
+                    MESSAGE_TEMP_SUCCESS, MESSAGE_TEMP_FAIL,MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE ->{
                         return IState.HANDLED
                     }
-                    else                            -> {
+                    else                                    -> {
                         return super.processMessage(msg)
                     }
                 }
@@ -179,7 +185,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_TEMP_LOGIN,MESSAGE_NORMAL_LOGIN->{
+                    MESSAGE_TEMP_LOGIN, MESSAGE_NORMAL_LOGIN    ->{
                         return IState.HANDLED
                     }
                     MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL -> {
@@ -198,7 +204,7 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL-> {
+                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL -> {
                         return IState.HANDLED
                     }
                     else                                        -> {
@@ -213,10 +219,10 @@ class LoginStateMachine(listener: OnStateChangeListener) : StateMachine("LoginSt
         override fun processMessage(msg: Message?): Boolean {
             with(stateMachine) {
                 when (msg?.what) {
-                    MESSAGE_NORMAL_SUCCESS,MESSAGE_NORMAL_FAIL-> {
+                    MESSAGE_NORMAL_SUCCESS, MESSAGE_NORMAL_FAIL,MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE -> {
                         return IState.HANDLED
                     }
-                    else                            -> {
+                    else                                        -> {
                         return super.processMessage(msg)
                     }
                 }

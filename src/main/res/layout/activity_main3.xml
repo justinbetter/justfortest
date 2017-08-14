@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/MESSAGE_TURNING_ON"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TURNING_ON"/>
+
+            <Button
+                android:id="@+id/MESSAGE_TURNED_ON"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TURNED_ON"/>
+
+            <Button
+                android:id="@+id/MESSAGE_TURNING_OFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TURNING_OFF"/>
+
+
+            <Button
+                android:id="@+id/MESSAGE_TURNED_OFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TURNED_OFF"/>
+
+            <Button
+                android:id="@+id/MESSAGE_CONNECTING_DEVICE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_CONNECTING_DEVICE"/>
+
+            <Button
+                android:id="@+id/MESSAGE_CONNECTED_DEVICE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_CONNECTED_DEVICE"/>
+
+            <Button
+                android:id="@+id/MESSAGE_DISCONNECTING_DEVICE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_DISCONNECTING_DEVICE"/>
+
+            <Button
+                android:id="@+id/MESSAGE_DISCONNECTED_DEVICE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_DISCONNECTED_DEVICE"/>
+
+            <Button
+                android:id="@+id/MESSAGE_READY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_READY"/>
+
+            <Button
+                android:id="@+id/MESSAGE_DIALING"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_DIALING"/>
+
+            <Button
+                android:id="@+id/MESSAGE_INCALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_INCALL"/>
+
+            <Button
+                android:id="@+id/MESSAGE_INCOMMINGCALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_INCOMMINGCALL"/>
+
+            <Button
+                android:id="@+id/MESSAGE_TERMINATINGCALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TERMINATINGCALL"/>
+
+            <Button
+                android:id="@+id/MESSAGE_TERMINATEDCALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_TERMINATEDCALL"/>
+
+            <Button
+                android:id="@+id/MESSAGE_CONNECTED_FAIL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_CONNECTED_FAIL"/>
+
+            <Button
+                android:id="@+id/MESSAGE_REMOTE_DISCONNECTED"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="MESSAGE_REMOTE_DISCONNECTED"/>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

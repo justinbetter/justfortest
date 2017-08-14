@@ -1,5 +1,6 @@
 package com.example.justfortest;
 
+import com.justlab.log.JLog;
 import com.tuyou.tsd.common.util.L;
 
 /**
@@ -12,6 +13,6 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         L.init(getApplicationContext());
-
+        JLog.init(true,"justin");
     }
 }

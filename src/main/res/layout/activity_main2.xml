@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/trylogin"
+                android:onClick="clickButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="trylogin"/>
+
+            <Button
+                android:id="@+id/tryloginIfNetWork"
+                android:onClick="clickButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tryloginIfNetWork"/>
+
+            <Button
+                android:id="@+id/login"
+                android:onClick="clickButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="login"/>
+
+
+            <Button
+                android:id="@+id/loginout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="loginout"/>
+
+            <Button
+                android:id="@+id/tempLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="tempLogin"/>
+
+            <Button
+                android:id="@+id/tempSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="tempSuccess"/>
+
+            <Button
+                android:id="@+id/tempFail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="tempFail"/>
+            <Button
+                android:id="@+id/normalLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="normalLogin"/>
+            <Button
+                android:id="@+id/normalSuccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="normalSuccess"/>
+            <Button
+                android:id="@+id/normalFail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="normalFail"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

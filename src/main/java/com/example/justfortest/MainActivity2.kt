@@ -2,6 +2,7 @@ package com.example.justfortest
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Message
 import android.view.View
 import com.example.justfortest.statemachine.LoginStateMachine
 import com.tuyou.tsd.common.util.L
@@ -10,6 +11,21 @@ import com.tuyou.tsd.common.util.L
  * Created by justi on 2017/6/15.
  */
 class MainActivity2 : Activity(), LoginStateMachine.OnStateChangeListener {
+
+    override fun handleCondition(msg: Message?) {
+        when (msg?.what) {
+            LoginStateMachine.MESSAGE_TRY_LOGIN ->{
+                loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_LOGIN)
+            }
+            LoginStateMachine.MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE ->{
+                loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_LOGIN)
+            }
+            else ->{
+                L.e("not handle condition : ${msg?.what}")
+            }
+        }
+
+    }
 
     override fun onStateEnter(state: LoginStateMachine.BaseState) {
         L.e("enter $state")
@@ -28,7 +44,8 @@ class MainActivity2 : Activity(), LoginStateMachine.OnStateChangeListener {
 
     fun clickButton(v: View?) {
         when (v?.id) {
-            R.id.mDefault  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_DEFAULT)
+            R.id.trylogin  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_TRY_LOGIN)
+            R.id.tryloginIfNetWork  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_TRY_LOGIN_IF_NETWORK_AVALIABLE)
             R.id.login  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_LOGIN)
             R.id.loginout  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_LOGINOUT)
             R.id.tempLogin  -> loginStateMachine.sendMessage(LoginStateMachine.MESSAGE_TEMP_LOGIN)
