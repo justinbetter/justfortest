@@ -32,7 +32,7 @@ class MainActivity3 : Activity(), BluetoothStateMachine.StateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main3)
         bluetoothStateMachine.start()
-        JLog.d("onCreate:..")
+        JLog.d("onCreate")
 
     }
 

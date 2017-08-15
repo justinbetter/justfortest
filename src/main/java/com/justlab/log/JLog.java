@@ -65,9 +65,9 @@ public class JLog {
         printLog(2, (String)null, new Object[]{msg});
     }
 
-    public static void d(String tag, Object... objects) {
-        printLog(2, tag, objects);
-    }
+//    public static void d(String tag, Object... objects) {
+//        printLog(2, tag, objects);
+//    }
 
     public static void i() {
         printLog(3, (String)null, new Object[]{"execute"});
@@ -77,9 +77,9 @@ public class JLog {
         printLog(3, (String)null, new Object[]{msg});
     }
 
-    public static void i(String tag, Object... objects) {
-        printLog(3, tag, objects);
-    }
+//    public static void i(String tag, Object... objects) {
+//        printLog(3, tag, objects);
+//    }
 
     public static void w() {
         printLog(4, (String)null, new Object[]{"execute"});
@@ -89,9 +89,9 @@ public class JLog {
         printLog(4, (String)null, new Object[]{msg});
     }
 
-    public static void w(String tag, Object... objects) {
-        printLog(4, tag, objects);
-    }
+//    public static void w(String tag, Object... objects) {
+//        printLog(4, tag, objects);
+//    }
 
     public static void e() {
         printLog(5, (String)null, new Object[]{"execute"});
@@ -101,9 +101,9 @@ public class JLog {
         printLog(5, (String)null, new Object[]{msg});
     }
 
-    public static void e(String tag, Object... objects) {
-        printLog(5, tag, objects);
-    }
+//    public static void e(String tag, Object... objects) {
+//        printLog(5, tag, objects);
+//    }
 
     public static void a() {
         printLog(6, (String)null, new Object[]{"execute"});
@@ -113,17 +113,17 @@ public class JLog {
         printLog(6, (String)null, new Object[]{msg});
     }
 
-    public static void a(String tag, Object... objects) {
-        printLog(6, tag, objects);
-    }
+//    public static void a(String tag, Object... objects) {
+//        printLog(6, tag, objects);
+//    }
 
     public static void json(String jsonFormat) {
         printLog(7, (String)null, new Object[]{jsonFormat});
     }
 
-    public static void json(String tag, String jsonFormat) {
-        printLog(7, tag, new Object[]{jsonFormat});
-    }
+//    public static void json(String tag, String jsonFormat) {
+//        printLog(7, tag, new Object[]{jsonFormat});
+//    }
 
     public static void xml(String xml) {
         printLog(8, (String)null, new Object[]{xml});
