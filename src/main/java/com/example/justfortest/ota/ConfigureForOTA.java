@@ -41,4 +41,11 @@ public class ConfigureForOTA {
     public String mode  = Constants.MODE_BSDIFF;  // full bsdiff vendor
 
 
+    @Override
+    public String toString() {
+        return "ConfigureForOTA{" +
+                "type='" + type + '\'' +
+                ", mode='" + mode + '\'' +
+                '}';
+    }
 }

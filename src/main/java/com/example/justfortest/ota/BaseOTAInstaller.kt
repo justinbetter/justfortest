@@ -6,12 +6,12 @@ import android.support.annotation.CallSuper
 /**
  * Created by justi on 2017/8/15.
  */
-abstract class BaseOTAStrategy(configureForOTA: ConfigureForOTA = ConfigureForOTA()) : CommonOTAStateMachine.OnStateChangeListener {
+abstract class BaseOTAInstaller(configureForOTA: ConfigureForOTA = ConfigureForOTA()) : CommonOTAStateMachine.OnStateChangeListener {
 
     var commonOTAStateMachine:CommonOTAStateMachine = CommonOTAStateMachine(configureForOTA.type, this)
 
     override fun onStateEnter(state: CommonOTAStateMachine.BaseState) {
-        onEnterState()
+        onEnterState(state)
     }
 
     override fun handleCondition(msg: Message?) {
@@ -22,7 +22,14 @@ abstract class BaseOTAStrategy(configureForOTA: ConfigureForOTA = ConfigureForOT
     open fun start(){
         commonOTAStateMachine.start()
     }
-    abstract fun onEnterState()
+    fun  sendMessage(what: Int) {
+        commonOTAStateMachine.sendMessage(what)
+    }
+    fun  sendMessage(msg: Message) {
+        commonOTAStateMachine.sendMessage(msg)
+    }
+
+    abstract fun onEnterState(state: CommonOTAStateMachine.BaseState)
 
 
 }
