@@ -1,35 +1,34 @@
 package com.example.justfortest.ota
 
-import android.os.Message
-import android.support.annotation.CallSuper
+import com.tuyou.tsd.common.util.L
 
 /**
  * Created by justi on 2017/8/15.
  */
-abstract class BaseOTAInstaller(configureForOTA: ConfigureForOTA = ConfigureForOTA()) : CommonOTAStateMachine.OnStateChangeListener {
+abstract class BaseOTAInstaller(var configureForOTA: ConfigureForOTA = ConfigureForOTA()) {
 
-    var commonOTAStateMachine:CommonOTAStateMachine = CommonOTAStateMachine(configureForOTA.type, this)
-
-    override fun onStateEnter(state: CommonOTAStateMachine.BaseState) {
-        onEnterState(state)
+    open fun onDefault(){
+        L.w(this::class.java.simpleName,"onDefault")
+    }
+    open fun onQuery(){
+        L.w(this::class.java.simpleName,"onQuery")
+    }
+    open fun onDownload(){
+        L.w(this::class.java.simpleName,"onDownload")
+    }
+    open fun onVerify(){
+        L.w(this::class.java.simpleName,"onVerify")
+    }
+    open fun onInstall(){
+        L.w(this::class.java.simpleName,"onInstall")
+    }
+    open fun onInstallSuccess(){
+        L.w(this::class.java.simpleName,"onInstallSuccess")
+    }
+    open fun onInstallFailure(){
+        L.w(this::class.java.simpleName,"onInstallFailure")
     }
 
-    override fun handleCondition(msg: Message?) {
-
-    }
-
-    @CallSuper
-    open fun start(){
-        commonOTAStateMachine.start()
-    }
-    fun  sendMessage(what: Int) {
-        commonOTAStateMachine.sendMessage(what)
-    }
-    fun  sendMessage(msg: Message) {
-        commonOTAStateMachine.sendMessage(msg)
-    }
-
-    abstract fun onEnterState(state: CommonOTAStateMachine.BaseState)
 
 
 }

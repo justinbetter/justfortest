@@ -4,6 +4,7 @@ import android.os.Message
 import com.tuyou.tsd.common.statemachine.IState
 import com.tuyou.tsd.common.statemachine.State
 import com.tuyou.tsd.common.statemachine.StateMachine
+import com.tuyou.tsd.common.util.L
 
 /**
  * Created by justi on 2017/8/14.
@@ -23,9 +24,9 @@ class CommonOTAStateMachine : StateMachine {
      *
      *
      */
-
-    constructor(name: String, listener: OnStateChangeListener) : super(name){
-        this.L = listener
+    private var mOTAInstaller:BaseOTAInstaller? = null
+    constructor(otaInstaller: BaseOTAInstaller) : super("CommonOTAStateMachine"){
+        this.mOTAInstaller = otaInstaller
         addState(mDefault)
         addState(query,mDefault)
         addState(download,mDefault)
@@ -34,6 +35,49 @@ class CommonOTAStateMachine : StateMachine {
         addState(installSuccess,mDefault)
         addState(installFailure,mDefault)
         setInitialState(mDefault)
+    }
+
+    fun setOTAInstaller(otaInstaller: BaseOTAInstaller) {
+        L.e("setInstall： ${otaInstaller.configureForOTA.type}")
+        this.mOTAInstaller = otaInstaller
+    }
+    fun getOTAInstaller()  = this.mOTAInstaller
+    
+    private var listener : OnStateChangeListener = object :OnStateChangeListener{
+        override fun onStateEnter(state: BaseState) {
+            when (state) {
+                is Default    -> {
+                    mOTAInstaller!!.onDefault()
+                }
+                is Query    -> {
+                    mOTAInstaller!!.onQuery()
+                }
+                is Download    -> {
+                    mOTAInstaller!!.onDownload()
+                }
+                is Verify    -> {
+                    mOTAInstaller!!.onVerify()
+                }
+                is Install    -> {
+                    mOTAInstaller!!.onInstall()
+                }
+                is InstallSuccess    -> {
+                    mOTAInstaller!!.onInstallSuccess()
+                }
+                is InstallFailure   ->{
+                    mOTAInstaller!!.onInstallFailure()
+                }
+                
+                else -> {
+                    L.e("not handle state $state")
+                }
+            }
+
+        }
+
+        override fun handleCondition(msg: Message?) {
+        }
+
     }
 
     companion object {
@@ -52,7 +96,7 @@ class CommonOTAStateMachine : StateMachine {
         val MESSAGE_ACC_OFF                         = BASEINDEX + 102
 
     }
-    private var L : OnStateChangeListener
+
     private var mDefault: Default = Default(this)
     private var query: Query = Query(this)
     private var download: Download = Download(this)
@@ -95,7 +139,7 @@ class CommonOTAStateMachine : StateMachine {
         var message: Message? = null
         override fun enter() {
             super.enter()
-            stateMachine.L.onStateEnter(this)
+            stateMachine.listener.onStateEnter(this)
         }
 
         override fun exit() {

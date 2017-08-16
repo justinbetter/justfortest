@@ -5,11 +5,31 @@ package com.example.justfortest.ota
  */
 class PatchOtaInstaller(configureForOTA: ConfigureForOTA) : BaseOTAInstaller(configureForOTA) {
 
-    override fun onEnterState(state: CommonOTAStateMachine.BaseState) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onDefault() {
+        super.onDefault()
     }
 
+    override fun onQuery() {
+        super.onQuery()
+    }
 
+    override fun onDownload() {
+        super.onDownload()
+    }
 
+    override fun onVerify() {
+        super.onVerify()
+    }
 
+    override fun onInstall() {
+        super.onInstall()
+    }
+
+    override fun onInstallSuccess() {
+        super.onInstallSuccess()
+    }
+
+    override fun onInstallFailure() {
+        super.onInstallFailure()
+    }
 }

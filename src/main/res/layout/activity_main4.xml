@@ -14,24 +14,43 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/APP_INSTALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="APP_INSTALL"/>
+
+            <Button
+                android:id="@+id/ROM_INSTALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="ROM_INSTALL"/>
+           <Button
+                android:id="@+id/PATCH_INSTALL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickButton"
+                android:text="PATCH_INSTALL"/>
 
             <Button
                 android:id="@+id/MESSAGE_DEFAULT"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_DEFAULT"/>
 
             <Button
                 android:id="@+id/MESSAGE_QUERY"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_QUERY"/>
 
             <Button
                 android:id="@+id/MESSAGE_DOWNLOAD"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_DOWNLOAD"/>
@@ -39,45 +58,47 @@
 
             <Button
                 android:id="@+id/MESSAGE_VERIFY"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_VERIFY"/>
 
             <Button
                 android:id="@+id/MESSAGE_INSTALL"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_INSTALL"/>
 
             <Button
                 android:id="@+id/MESSAGE_INSTALL_SUCCESS"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_INSTALL_SUCCESS"/>
 
             <Button
                 android:id="@+id/MESSAGE_INSTALL_FAILURE"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_INSTALL_FAILURE"/>
 
             <Button
                 android:id="@+id/MESSAGE_ACC_ON"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_ACC_ON"/>
 
             <Button
                 android:id="@+id/MESSAGE_ACC_OFF"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="clickButton"
                 android:text="MESSAGE_ACC_OFF"/>
+
+
 
 
         </LinearLayout>
