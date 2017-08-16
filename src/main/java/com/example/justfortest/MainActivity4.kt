@@ -14,7 +14,7 @@ import com.example.justfortest.ota.OTAInstallerFactory
 class MainActivity4 : Activity() {
 
 
-    val otaInstaller: BaseOTAInstaller=OTAInstallerFactory.createInstaller(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH,ConfigureForOTA.Constants.MODE_BSDIFF))
+    val otaInstaller: BaseOTAInstaller=OTAInstallerFactory.createInstaller(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_APP,ConfigureForOTA.Constants.MODE_BSDIFF))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

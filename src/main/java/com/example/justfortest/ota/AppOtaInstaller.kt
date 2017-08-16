@@ -10,10 +10,15 @@ class AppOtaInstaller(configureForOTA: ConfigureForOTA = ConfigureForOTA()) : Ba
     override fun onEnterState(state: CommonOTAStateMachine.BaseState) {
         when (state) {
             is CommonOTAStateMachine.Default    -> {
-
             }
             is CommonOTAStateMachine.Query  ->{
                 //
+                L.d("查询")
+                sendMessage(CommonOTAStateMachine.MESSAGE_DOWNLOAD)
+            }
+            is CommonOTAStateMachine.Download ->{
+                L.e("下载失败，回到默认")
+                sendMessage(CommonOTAStateMachine.MESSAGE_DEFAULT)
             }
             else -> {
                 L.e("not handle enter : $state")
