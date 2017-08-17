@@ -25,8 +25,8 @@ class CommonOTAStateMachine : StateMachine {
      *
      */
     private var mOTAInstaller:BaseOTAInstaller? = null
-    constructor(otaInstaller: BaseOTAInstaller) : super("CommonOTAStateMachine"){
-        this.mOTAInstaller = otaInstaller
+    constructor(configureForOTA: ConfigureForOTA) : super("CommonOTAStateMachine"){
+        setOTAInstaller(configureForOTA)
         addState(mDefault)
         addState(query,mDefault)
         addState(download,mDefault)
@@ -37,9 +37,10 @@ class CommonOTAStateMachine : StateMachine {
         setInitialState(mDefault)
     }
 
-    fun setOTAInstaller(otaInstaller: BaseOTAInstaller) {
-        L.e("setInstall： ${otaInstaller.configureForOTA.type}")
+    private fun setOTAInstaller(configureForOTA: ConfigureForOTA) {
+        val otaInstaller = OTAInstallerFactory.createInstaller(configureForOTA,this)
         this.mOTAInstaller = otaInstaller
+        L.e("setInstall： $configureForOTA, turn to $otaInstaller")
     }
     fun getOTAInstaller()  = this.mOTAInstaller
     
@@ -94,6 +95,7 @@ class CommonOTAStateMachine : StateMachine {
         //external
         val MESSAGE_ACC_ON                          = BASEINDEX + 101
         val MESSAGE_ACC_OFF                         = BASEINDEX + 102
+        val MESSAGE_INSTALL_RESET                   = BASEINDEX + 103 //must add configure
 
     }
 
@@ -153,6 +155,13 @@ class CommonOTAStateMachine : StateMachine {
             with(stateMachine) {
                 when (msg?.what) {
                     MESSAGE_DEFAULT ->{
+                        return IState.HANDLED
+                    }
+                    MESSAGE_INSTALL_RESET ->{
+                        msg.obj?.let {
+                            setOTAInstaller(it as ConfigureForOTA)
+                            transitionTo(mDefault)
+                        }
                         return IState.HANDLED
                     }
                     MESSAGE_QUERY ->{

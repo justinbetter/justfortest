@@ -16,19 +16,19 @@ object OTAInstallerFactory {
      *  4. 通用流程     query-> download-> verify-> install->result(success/fail)
      */
 
-    fun createInstaller(configureForOTA: ConfigureForOTA): BaseOTAInstaller = when (configureForOTA.type) {
+    fun createInstaller(configureForOTA: ConfigureForOTA,commonOTAStateMachine: CommonOTAStateMachine): BaseOTAInstaller? = when (configureForOTA.type) {
         ConfigureForOTA.Constants.TYPE_APP -> {
-            AppOtaInstaller(configureForOTA)
+            AppOtaInstaller(configureForOTA,commonOTAStateMachine)
         }
         ConfigureForOTA.Constants.TYPE_ROM -> {
-            RomOtaInstaller(configureForOTA)
+            RomOtaInstaller(configureForOTA,commonOTAStateMachine)
         }
         ConfigureForOTA.Constants.TYPE_PATCH -> {
-            PatchOtaInstaller(configureForOTA)
+            PatchOtaInstaller(configureForOTA,commonOTAStateMachine)
         }
         else                               -> {
-            L.d("default create installer $configureForOTA")
-            AppOtaInstaller(configureForOTA)
+            L.e("cannot  create installer $configureForOTA,return null!")
+            null
         }
     }
 

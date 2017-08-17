@@ -5,7 +5,7 @@ import com.tuyou.tsd.common.util.L
 /**
  * Created by justi on 2017/8/15.
  */
-abstract class BaseOTAInstaller(var configureForOTA: ConfigureForOTA = ConfigureForOTA()) {
+abstract class BaseOTAInstaller(var configureForOTA: ConfigureForOTA = ConfigureForOTA(), var commonOTAStateMachine: CommonOTAStateMachine) {
 
     open fun onDefault(){
         L.w(this::class.java.simpleName,"onDefault")

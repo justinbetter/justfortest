@@ -1,16 +1,21 @@
 package com.example.justfortest.ota
 
+import com.tuyou.tsd.common.util.L
+
 /**
  * Created by justi on 2017/8/15.
  */
-class PatchOtaInstaller(configureForOTA: ConfigureForOTA) : BaseOTAInstaller(configureForOTA) {
+class PatchOtaInstaller(configureForOTA: ConfigureForOTA, commonOTAStateMachine: CommonOTAStateMachine) : BaseOTAInstaller(configureForOTA, commonOTAStateMachine) {
 
     override fun onDefault() {
         super.onDefault()
+        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_QUERY)
     }
 
     override fun onQuery() {
         super.onQuery()
+        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_SUCCESS)
+
     }
 
     override fun onDownload() {
@@ -27,6 +32,7 @@ class PatchOtaInstaller(configureForOTA: ConfigureForOTA) : BaseOTAInstaller(con
 
     override fun onInstallSuccess() {
         super.onInstallSuccess()
+        L.w("a good ending")
     }
 
     override fun onInstallFailure() {
