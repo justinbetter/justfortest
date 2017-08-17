@@ -95,8 +95,11 @@ class CommonOTAStateMachine : StateMachine {
         //external
         val MESSAGE_ACC_ON                          = BASEINDEX + 101
         val MESSAGE_ACC_OFF                         = BASEINDEX + 102
-        val MESSAGE_INSTALL_RESET                   = BASEINDEX + 103 //must add configure
+        private val MESSAGE_INSTALL_RESET           = BASEINDEX + 103 //must add configure
 
+    }
+    fun sendInstallerResetMessage(configureForOTA: ConfigureForOTA) {
+        sendMessage(MESSAGE_INSTALL_RESET,configureForOTA)
     }
 
     private var mDefault: Default = Default(this)
@@ -321,6 +324,8 @@ class CommonOTAStateMachine : StateMachine {
             }
         }
     }
+
+
 
 
 }

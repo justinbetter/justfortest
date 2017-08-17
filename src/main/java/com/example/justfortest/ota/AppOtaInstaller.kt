@@ -36,7 +36,7 @@ class AppOtaInstaller(configureForOTA: ConfigureForOTA = ConfigureForOTA(), comm
 
     override fun onInstallSuccess() {
         super.onInstallSuccess()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_RESET,ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH,ConfigureForOTA.Constants.MODE_BSDIFF))
+        commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH,ConfigureForOTA.Constants.MODE_BSDIFF))
     }
 
     override fun onInstallFailure() {

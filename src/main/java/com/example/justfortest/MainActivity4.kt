@@ -23,16 +23,13 @@ class MainActivity4 : Activity() {
     fun clickButton(v: View?) {
         when (v?.id) {
             R.id.APP_INSTALL             -> {
-                commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_RESET,
-                                                  ConfigureForOTA(ConfigureForOTA.Constants.TYPE_APP, ConfigureForOTA.Constants.MODE_FULL_UPGRADE))
+                commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_APP, ConfigureForOTA.Constants.MODE_FULL_UPGRADE))
             }
             R.id.ROM_INSTALL             -> {
-                commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_RESET,
-                                                  ConfigureForOTA(ConfigureForOTA.Constants.TYPE_ROM, ConfigureForOTA.Constants.MODE_VENDOR))
+                commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_ROM, ConfigureForOTA.Constants.MODE_VENDOR))
             }
             R.id.PATCH_INSTALL           -> {
-                commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_RESET,
-                                                  ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH, ConfigureForOTA.Constants.MODE_BSDIFF))
+                commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH, ConfigureForOTA.Constants.MODE_BSDIFF))
             }
             R.id.MESSAGE_ACC_ON          -> commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_ACC_ON)
             R.id.MESSAGE_ACC_OFF         -> commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_ACC_OFF)

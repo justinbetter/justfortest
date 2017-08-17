@@ -12,7 +12,7 @@ object OTAInstallerFactory {
      * common：
      *  1. 升级类型     type:"rom","app","patch"
      *  2. 升级模式     mode: "full","bsdiff","vendor"
-     *  3. 配置文件
+     *  3. 配置文件     ConfigureForOTA
      *  4. 通用流程     query-> download-> verify-> install->result(success/fail)
      */
 

@@ -31,7 +31,7 @@ class RomOtaInstaller(configureForOTA: ConfigureForOTA, commonOTAStateMachine: C
 
     override fun onInstallSuccess() {
         super.onInstallSuccess()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_RESET,ConfigureForOTA(ConfigureForOTA.Constants.TYPE_APP,ConfigureForOTA.Constants.MODE_FULL_UPGRADE))
+        commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_APP,ConfigureForOTA.Constants.MODE_FULL_UPGRADE))
     }
 
     override fun onInstallFailure() {
