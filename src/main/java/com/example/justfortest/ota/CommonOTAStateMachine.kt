@@ -1,5 +1,6 @@
 package com.example.justfortest.ota
 
+import android.content.Context
 import android.os.Message
 import com.tuyou.tsd.common.statemachine.IState
 import com.tuyou.tsd.common.statemachine.State
@@ -25,7 +26,9 @@ class CommonOTAStateMachine : StateMachine {
      *
      */
     private var mOTAInstaller:BaseOTAInstaller? = null
-    constructor(configureForOTA: ConfigureForOTA) : super("CommonOTAStateMachine"){
+    private var mContext:Context
+    constructor(context: Context,configureForOTA: ConfigureForOTA) : super("CommonOTAStateMachine"){
+        this.mContext = context
         setOTAInstaller(configureForOTA)
         addState(mDefault)
         addState(query,mDefault)
@@ -38,12 +41,13 @@ class CommonOTAStateMachine : StateMachine {
     }
 
     private fun setOTAInstaller(configureForOTA: ConfigureForOTA) {
-        val otaInstaller = OTAInstallerFactory.createInstaller(configureForOTA,this)
+        val otaInstaller = OTAInstallerFactory.createInstaller(mContext,configureForOTA,this)
         this.mOTAInstaller = otaInstaller
         L.e("setInstall： $configureForOTA, turn to $otaInstaller")
     }
     fun getOTAInstaller()  = this.mOTAInstaller
-    
+    fun getContext()  = this.mContext
+
     private var listener : OnStateChangeListener = object :OnStateChangeListener{
         override fun onStateEnter(state: BaseState) {
             when (state) {

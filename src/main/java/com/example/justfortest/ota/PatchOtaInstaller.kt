@@ -1,11 +1,12 @@
 package com.example.justfortest.ota
 
+import android.content.Context
 import com.tuyou.tsd.common.util.L
 
 /**
  * Created by justi on 2017/8/15.
  */
-class PatchOtaInstaller(configureForOTA: ConfigureForOTA, commonOTAStateMachine: CommonOTAStateMachine) : BaseOTAInstaller(configureForOTA, commonOTAStateMachine) {
+class PatchOtaInstaller(context: Context,configureForOTA: ConfigureForOTA, commonOTAStateMachine: CommonOTAStateMachine) : BaseOTAInstaller(context,configureForOTA, commonOTAStateMachine) {
 
     override fun onDefault() {
         super.onDefault()

@@ -1,11 +1,12 @@
 package com.example.justfortest.ota
 
+import android.content.Context
 import com.tuyou.tsd.common.util.L
 
 /**
  * Created by justi on 2017/8/15.
  */
-abstract class BaseOTAInstaller(var configureForOTA: ConfigureForOTA = ConfigureForOTA(), var commonOTAStateMachine: CommonOTAStateMachine) {
+abstract class BaseOTAInstaller(var context: Context, var configureForOTA: ConfigureForOTA = ConfigureForOTA(), var commonOTAStateMachine: CommonOTAStateMachine) {
 
     open fun onDefault(){
         L.w(this::class.java.simpleName,"onDefault")

@@ -1,5 +1,6 @@
 package com.example.justfortest.ota
 
+import android.content.Context
 import com.tuyou.tsd.common.util.L
 
 /**
@@ -16,7 +17,7 @@ object OTAInstallerFactory {
      *  4. 通用流程     query-> download-> verify-> install->result(success/fail)
      */
 
-    fun createInstaller(configureForOTA: ConfigureForOTA,commonOTAStateMachine: CommonOTAStateMachine): BaseOTAInstaller? = when (configureForOTA.type) {
+    fun createInstaller(context: Context,configureForOTA: ConfigureForOTA,commonOTAStateMachine: CommonOTAStateMachine): BaseOTAInstaller? = when (configureForOTA.type) {
         ConfigureForOTA.Constants.TYPE_APP -> {
             AppOtaInstaller(configureForOTA,commonOTAStateMachine)
         }
