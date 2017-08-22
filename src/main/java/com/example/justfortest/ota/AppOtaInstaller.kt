@@ -10,38 +10,38 @@ class AppOtaInstaller(context: Context, configureForOTA: ConfigureForOTA , commo
 
     override fun onDefault() {
         super.onDefault()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_QUERY)
+        sendQueryMessage()
     }
 
     override fun onQuery() {
         super.onQuery()
         L.w("do query")
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_DOWNLOAD)
+        sendDownloadMessage()
     }
 
     override fun onDownload() {
         super.onDownload()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_VERIFY)
+        sendVerifyMessage()
     }
 
     override fun onVerify() {
         super.onVerify()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL)
+        sendInstallMessage()
 
     }
 
     override fun onInstall() {
         super.onInstall()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_SUCCESS)
+        sendInstallSuccessMessage()
     }
 
     override fun onInstallSuccess() {
         super.onInstallSuccess()
-        commonOTAStateMachine.sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH,ConfigureForOTA.Constants.MODE_BSDIFF))
+        sendInstallerResetMessage(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_PATCH,ConfigureForOTA.Constants.MODE_BSDIFF))
     }
 
     override fun onInstallFailure() {
         super.onInstallFailure()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_DEFAULT)
+        sendDefaultMessage()
     }
 }

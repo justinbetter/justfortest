@@ -10,13 +10,12 @@ class PatchOtaInstaller(context: Context,configureForOTA: ConfigureForOTA, commo
 
     override fun onDefault() {
         super.onDefault()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_QUERY)
+        sendQueryMessage()
     }
 
     override fun onQuery() {
         super.onQuery()
-        commonOTAStateMachine.sendMessage(CommonOTAStateMachine.MESSAGE_INSTALL_SUCCESS)
-
+        sendInstallSuccessMessage()
     }
 
     override fun onDownload() {

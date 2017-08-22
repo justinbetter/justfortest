@@ -19,13 +19,13 @@ object OTAInstallerFactory {
 
     fun createInstaller(context: Context,configureForOTA: ConfigureForOTA,commonOTAStateMachine: CommonOTAStateMachine): BaseOTAInstaller? = when (configureForOTA.type) {
         ConfigureForOTA.Constants.TYPE_APP -> {
-            AppOtaInstaller(configureForOTA,commonOTAStateMachine)
+            AppOtaInstaller(context,configureForOTA,commonOTAStateMachine)
         }
         ConfigureForOTA.Constants.TYPE_ROM -> {
-            RomOtaInstaller(configureForOTA,commonOTAStateMachine)
+            RomOtaInstaller(context,configureForOTA,commonOTAStateMachine)
         }
         ConfigureForOTA.Constants.TYPE_PATCH -> {
-            PatchOtaInstaller(configureForOTA,commonOTAStateMachine)
+            PatchOtaInstaller(context,configureForOTA,commonOTAStateMachine)
         }
         else                               -> {
             L.e("cannot  create installer $configureForOTA,return null!")

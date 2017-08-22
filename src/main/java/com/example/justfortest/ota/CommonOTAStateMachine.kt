@@ -102,9 +102,19 @@ class CommonOTAStateMachine : StateMachine {
         private val MESSAGE_INSTALL_RESET           = BASEINDEX + 103 //must add configure
 
     }
-    fun sendInstallerResetMessage(configureForOTA: ConfigureForOTA) {
-        sendMessage(MESSAGE_INSTALL_RESET,configureForOTA)
-    }
+    //for caller
+    fun sendInstallerResetMessage(configureForOTA: ConfigureForOTA) = sendMessage(MESSAGE_INSTALL_RESET, configureForOTA)
+    fun sendDefaultMessage() = sendMessage(MESSAGE_DEFAULT)
+    fun sendQueryMessage() = sendMessage(MESSAGE_QUERY)
+    fun sendDownloadMessage() = sendMessage(MESSAGE_DOWNLOAD)
+    fun sendVerifyMessage() = sendMessage(MESSAGE_VERIFY)
+    fun sendInstallMessage() = sendMessage(MESSAGE_INSTALL)
+    fun sendInstallSuccessMessage() = sendMessage(MESSAGE_INSTALL_SUCCESS)
+    fun sendInstallFailureMessage() = sendMessage(MESSAGE_INSTALL_FAILURE)
+    fun sendAccOnMessage() = sendMessage(MESSAGE_ACC_ON)
+    fun sendAccOffMessage() = sendMessage(MESSAGE_ACC_OFF)
+
+
 
     private var mDefault: Default = Default(this)
     private var query: Query = Query(this)

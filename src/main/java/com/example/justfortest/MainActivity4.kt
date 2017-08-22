@@ -12,7 +12,7 @@ import com.example.justfortest.ota.ConfigureForOTA
 class MainActivity4 : Activity() {
 
 
-    val commonOTAStateMachine = CommonOTAStateMachine(ConfigureForOTA(ConfigureForOTA.Constants.TYPE_ROM,ConfigureForOTA.Constants.MODE_VENDOR))
+    val commonOTAStateMachine = CommonOTAStateMachine(this@MainActivity4,ConfigureForOTA(ConfigureForOTA.Constants.TYPE_ROM,ConfigureForOTA.Constants.MODE_FULL_UPGRADE))
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main4)
